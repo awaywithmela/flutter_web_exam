@@ -49,14 +49,18 @@ class _AdminPageState extends State<AdminPage> {
     final admin = context.watch<AuthProvider>().user;
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF0F4FF),
+      backgroundColor: const Color(0xFF07080D),
       body: Column(
         children: [
           // ── Header ──────────────────────────────────────────────────────
           Container(
             decoration: const BoxDecoration(
               gradient: LinearGradient(
-                colors: [Color(0xFF0F766E), Color(0xFF0D9488)],
+                colors: [
+                  Color(0xFF07080D),
+                  Color(0xFF211B3D),
+                  Color(0xFF11131B),
+                ],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
               ),
@@ -70,7 +74,7 @@ class _AdminPageState extends State<AdminPage> {
                     const Text(
                       'Admin Dashboard',
                       style: TextStyle(
-                        color: Colors.white,
+                        color: Color(0xFFF7F2EA),
                         fontSize: 20,
                         fontWeight: FontWeight.w700,
                         letterSpacing: 0.3,
@@ -78,10 +82,7 @@ class _AdminPageState extends State<AdminPage> {
                     ),
                     Text(
                       admin?.email ?? '',
-                      style: TextStyle(
-                        color: Colors.white.withOpacity(0.75),
-                        fontSize: 12,
-                      ),
+                      style: TextStyle(color: Color(0xFFCFC7BC), fontSize: 12),
                     ),
                   ],
                 ),
@@ -89,14 +90,19 @@ class _AdminPageState extends State<AdminPage> {
                 OutlinedButton(
                   onPressed: _logout,
                   style: OutlinedButton.styleFrom(
-                    side: const BorderSide(color: Colors.white38),
+                    side: const BorderSide(color: Color(0x33C8B6FF)),
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 20, vertical: 10),
+                      horizontal: 20,
+                      vertical: 10,
+                    ),
                     shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10)),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
                   ),
-                  child: const Text('Logout',
-                      style: TextStyle(color: Colors.white, fontSize: 13)),
+                  child: const Text(
+                    'Logout',
+                    style: TextStyle(color: Color(0xFFF7F2EA), fontSize: 13),
+                  ),
                 ),
               ],
             ),
@@ -116,14 +122,18 @@ class _AdminPageState extends State<AdminPage> {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Text('Could not load users.\n${snapshot.error}',
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(color: Colors.grey)),
+                        Text(
+                          'Could not load users.\n${snapshot.error}',
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(color: Color(0xFFBDB4AA)),
+                        ),
                         const SizedBox(height: 16),
                         FilledButton(
                           onPressed: () => setState(_loadUsers),
                           style: FilledButton.styleFrom(
-                              backgroundColor: const Color(0xFF0F766E)),
+                            backgroundColor: const Color(0xFFC8B6FF),
+                            foregroundColor: const Color(0xFF171022),
+                          ),
                           child: const Text('Try Again'),
                         ),
                       ],
@@ -147,8 +157,8 @@ class _AdminPageState extends State<AdminPage> {
                             label: 'Total Users',
                             value: '${users.length}',
                             gradientColors: const [
-                              Color(0xFF0F766E),
-                              Color(0xFF0D9488)
+                              Color(0xFFC8B6FF),
+                              Color(0xFFE7DEFF),
                             ],
                           ),
                           const SizedBox(width: 16),
@@ -156,8 +166,8 @@ class _AdminPageState extends State<AdminPage> {
                             label: 'Admins',
                             value: '$adminCount',
                             gradientColors: const [
-                              Color(0xFF7C3AED),
-                              Color(0xFF9F67FA)
+                              Color(0xFF7FFFD4),
+                              Color(0xFFB9FFE9),
                             ],
                           ),
                           const SizedBox(width: 16),
@@ -165,8 +175,8 @@ class _AdminPageState extends State<AdminPage> {
                             label: 'Regular Users',
                             value: '$regularCount',
                             gradientColors: const [
-                              Color(0xFF0284C7),
-                              Color(0xFF38BDF8)
+                              Color(0xFFA78BFA),
+                              Color(0xFFD8B4FE),
                             ],
                           ),
                         ],
@@ -177,11 +187,11 @@ class _AdminPageState extends State<AdminPage> {
                       Container(
                         width: double.infinity,
                         decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(16),
+                          color: const Color(0xFF11131B),
+                          borderRadius: BorderRadius.circular(8),
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.black.withOpacity(0.05),
+                              color: Colors.black.withValues(alpha: 0.32),
                               blurRadius: 16,
                               offset: const Offset(0, 4),
                             ),
@@ -210,17 +220,20 @@ class _AdminPageState extends State<AdminPage> {
                                 return SingleChildScrollView(
                                   scrollDirection: Axis.horizontal,
                                   child: ConstrainedBox(
-                                    constraints: BoxConstraints(minWidth: constraints.maxWidth),
+                                    constraints: BoxConstraints(
+                                      minWidth: constraints.maxWidth,
+                                    ),
                                     child: DataTable(
                                       showCheckboxColumn: false,
                                       columnSpacing: 24.0,
                                       horizontalMargin: 24.0,
                                       headingRowColor: WidgetStateProperty.all(
-                                          const Color(0xFFF8FAFC)),
+                                        const Color(0xFF171923),
+                                      ),
                                       headingTextStyle: TextStyle(
                                         fontWeight: FontWeight.w600,
                                         fontSize: 13,
-                                        color: Colors.grey.shade600,
+                                        color: Color(0xFFBDB4AA),
                                       ),
                                       dataRowMaxHeight: 52,
                                       dividerThickness: 0.8,
@@ -239,58 +252,98 @@ class _AdminPageState extends State<AdminPage> {
                                             if (selected ?? false) {
                                               showDialog(
                                                 context: context,
-                                                builder: (context) => _UserEditDialog(
-                                                  user: u,
-                                                  onUserUpdated: () => setState(_loadUsers),
-                                                ),
+                                                builder: (context) =>
+                                                    _UserEditDialog(
+                                                      user: u,
+                                                      onUserUpdated: () =>
+                                                          setState(_loadUsers),
+                                                    ),
                                               );
                                             }
                                           },
                                           cells: [
-                                            DataCell(Text('#${u.id}',
-                                              style: TextStyle(
-                                                  fontSize: 12,
-                                                  color: Colors.grey.shade500))),
-                                          DataCell(Text(u.fullName,
-                                              style: const TextStyle(
-                                                  fontWeight: FontWeight.w600))),
-                                          DataCell(Text(u.email,
-                                              style: TextStyle(
-                                                  fontSize: 13,
-                                                  color: Colors.grey.shade700))),
-                                          DataCell(
-                                            Container(
-                                              padding: const EdgeInsets.symmetric(
-                                                  horizontal: 10, vertical: 3),
-                                              decoration: BoxDecoration(
-                                                color: u.isAdmin
-                                                    ? const Color(0xFFEDE9FE)
-                                                    : const Color(0xFFCCFBF1),
-                                                borderRadius:
-                                                    BorderRadius.circular(20),
-                                              ),
-                                              child: Text(
-                                                u.isAdmin ? 'Admin' : 'User',
+                                            DataCell(
+                                              Text(
+                                                '#${u.id}',
                                                 style: TextStyle(
                                                   fontSize: 12,
-                                                  fontWeight: FontWeight.w700,
-                                                  color: u.isAdmin
-                                                      ? const Color(0xFF6D28D9)
-                                                      : const Color(0xFF0F766E),
+                                                  color: Color(0xFF8D857D),
                                                 ),
                                               ),
                                             ),
-                                          ),
-                                          DataCell(Text(u.city ?? '—',
-                                              style:
-                                                  const TextStyle(fontSize: 13))),
-                                          DataCell(Text(u.country ?? '—',
-                                              style:
-                                                  const TextStyle(fontSize: 13))),
-                                          DataCell(Text(u.phoneNumber ?? '—',
-                                              style:
-                                                  const TextStyle(fontSize: 13))),
-                                        ]);
+                                            DataCell(
+                                              Text(
+                                                u.fullName,
+                                                style: const TextStyle(
+                                                  fontWeight: FontWeight.w600,
+                                                ),
+                                              ),
+                                            ),
+                                            DataCell(
+                                              Text(
+                                                u.email,
+                                                style: TextStyle(
+                                                  fontSize: 13,
+                                                  color: Color(0xFFCFC7BC),
+                                                ),
+                                              ),
+                                            ),
+                                            DataCell(
+                                              Container(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                      horizontal: 10,
+                                                      vertical: 3,
+                                                    ),
+                                                decoration: BoxDecoration(
+                                                  color: u.isAdmin
+                                                      ? const Color(0x332A1320)
+                                                      : const Color(0x1F7FFFD4),
+                                                  borderRadius:
+                                                      BorderRadius.circular(8),
+                                                ),
+                                                child: Text(
+                                                  u.isAdmin ? 'Admin' : 'User',
+                                                  style: TextStyle(
+                                                    fontSize: 12,
+                                                    fontWeight: FontWeight.w700,
+                                                    color: u.isAdmin
+                                                        ? const Color(
+                                                            0xFFC8B6FF,
+                                                          )
+                                                        : const Color(
+                                                            0xFF7FFFD4,
+                                                          ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            DataCell(
+                                              Text(
+                                                u.city ?? '—',
+                                                style: const TextStyle(
+                                                  fontSize: 13,
+                                                ),
+                                              ),
+                                            ),
+                                            DataCell(
+                                              Text(
+                                                u.country ?? '—',
+                                                style: const TextStyle(
+                                                  fontSize: 13,
+                                                ),
+                                              ),
+                                            ),
+                                            DataCell(
+                                              Text(
+                                                u.phoneNumber ?? '—',
+                                                style: const TextStyle(
+                                                  fontSize: 13,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        );
                                       }).toList(),
                                     ),
                                   ),
@@ -336,10 +389,10 @@ class _StatCard extends StatelessWidget {
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(8),
           boxShadow: [
             BoxShadow(
-              color: gradientColors.first.withOpacity(0.3),
+              color: gradientColors.first.withValues(alpha: 0.3),
               blurRadius: 12,
               offset: const Offset(0, 4),
             ),
@@ -361,7 +414,7 @@ class _StatCard extends StatelessWidget {
             Text(
               label,
               style: TextStyle(
-                color: Colors.white.withOpacity(0.85),
+                color: const Color(0xFF11131B).withValues(alpha: 0.76),
                 fontSize: 13,
                 fontWeight: FontWeight.w500,
               ),
@@ -400,10 +453,14 @@ class _UserEditDialogState extends State<_UserEditDialog> {
   void initState() {
     super.initState();
     _firstNameController = TextEditingController(text: widget.user.firstName);
-    _middleNameController = TextEditingController(text: widget.user.middleName ?? '');
+    _middleNameController = TextEditingController(
+      text: widget.user.middleName ?? '',
+    );
     _lastNameController = TextEditingController(text: widget.user.lastName);
     _emailController = TextEditingController(text: widget.user.email);
-    _phoneController = TextEditingController(text: widget.user.phoneNumber ?? '');
+    _phoneController = TextEditingController(
+      text: widget.user.phoneNumber ?? '',
+    );
     _addressController = TextEditingController(text: widget.user.address ?? '');
     _cityController = TextEditingController(text: widget.user.city ?? '');
     _countryController = TextEditingController(text: widget.user.country ?? '');
@@ -429,25 +486,37 @@ class _UserEditDialogState extends State<_UserEditDialog> {
     try {
       final token = context.read<AuthProvider>().token;
       if (token == null) return;
-      
+
       final updatedUser = UserModel(
         id: widget.user.id,
         firstName: _firstNameController.text.trim(),
         lastName: _lastNameController.text.trim(),
         email: _emailController.text.trim(),
-        middleName: _middleNameController.text.trim().isNotEmpty ? _middleNameController.text.trim() : null,
-        phoneNumber: _phoneController.text.trim().isNotEmpty ? _phoneController.text.trim() : null,
+        middleName: _middleNameController.text.trim().isNotEmpty
+            ? _middleNameController.text.trim()
+            : null,
+        phoneNumber: _phoneController.text.trim().isNotEmpty
+            ? _phoneController.text.trim()
+            : null,
         birthDate: widget.user.birthDate,
-        gender: _genderController.text.trim().isNotEmpty ? _genderController.text.trim() : null,
-        address: _addressController.text.trim().isNotEmpty ? _addressController.text.trim() : null,
-        city: _cityController.text.trim().isNotEmpty ? _cityController.text.trim() : null,
-        country: _countryController.text.trim().isNotEmpty ? _countryController.text.trim() : null,
+        gender: _genderController.text.trim().isNotEmpty
+            ? _genderController.text.trim()
+            : null,
+        address: _addressController.text.trim().isNotEmpty
+            ? _addressController.text.trim()
+            : null,
+        city: _cityController.text.trim().isNotEmpty
+            ? _cityController.text.trim()
+            : null,
+        country: _countryController.text.trim().isNotEmpty
+            ? _countryController.text.trim()
+            : null,
         profilePictureUrl: widget.user.profilePictureUrl,
         isAdmin: widget.user.isAdmin,
       );
 
       await UserService().updateUser(token, widget.user.id, updatedUser);
-      
+
       if (mounted) {
         Navigator.pop(context);
         widget.onUserUpdated();
@@ -455,7 +524,12 @@ class _UserEditDialogState extends State<_UserEditDialog> {
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Error: $e', style: const TextStyle(color: Colors.white))),
+          SnackBar(
+            content: Text(
+              'Error: $e',
+              style: const TextStyle(color: Colors.white),
+            ),
+          ),
         );
       }
     } finally {
@@ -468,7 +542,10 @@ class _UserEditDialogState extends State<_UserEditDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text('Update User Details', style: TextStyle(fontWeight: FontWeight.bold)),
+      title: const Text(
+        'Update User Details',
+        style: TextStyle(fontWeight: FontWeight.bold),
+      ),
       content: SingleChildScrollView(
         child: SizedBox(
           width: 500,
@@ -476,37 +553,118 @@ class _UserEditDialogState extends State<_UserEditDialog> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text('Personal Information', style: TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF0F766E))),
+              const Text(
+                'Personal Information',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xFFC8B6FF),
+                ),
+              ),
               const SizedBox(height: 12),
               Row(
                 children: [
-                  Expanded(child: TextField(controller: _firstNameController, decoration: const InputDecoration(labelText: 'First Name', border: OutlineInputBorder()))),
+                  Expanded(
+                    child: TextField(
+                      controller: _firstNameController,
+                      decoration: const InputDecoration(
+                        labelText: 'First Name',
+                        border: OutlineInputBorder(),
+                      ),
+                    ),
+                  ),
                   const SizedBox(width: 12),
-                  Expanded(child: TextField(controller: _middleNameController, decoration: const InputDecoration(labelText: 'Middle Name', border: OutlineInputBorder()))),
+                  Expanded(
+                    child: TextField(
+                      controller: _middleNameController,
+                      decoration: const InputDecoration(
+                        labelText: 'Middle Name',
+                        border: OutlineInputBorder(),
+                      ),
+                    ),
+                  ),
                   const SizedBox(width: 12),
-                  Expanded(child: TextField(controller: _lastNameController, decoration: const InputDecoration(labelText: 'Last Name', border: OutlineInputBorder()))),
+                  Expanded(
+                    child: TextField(
+                      controller: _lastNameController,
+                      decoration: const InputDecoration(
+                        labelText: 'Last Name',
+                        border: OutlineInputBorder(),
+                      ),
+                    ),
+                  ),
                 ],
               ),
               const SizedBox(height: 16),
               Row(
                 children: [
-                  Expanded(child: TextField(controller: _genderController, decoration: const InputDecoration(labelText: 'Gender', border: OutlineInputBorder()))),
+                  Expanded(
+                    child: TextField(
+                      controller: _genderController,
+                      decoration: const InputDecoration(
+                        labelText: 'Gender',
+                        border: OutlineInputBorder(),
+                      ),
+                    ),
+                  ),
                 ],
               ),
               const SizedBox(height: 24),
-              const Text('Contact & Location', style: TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF0F766E))),
+              const Text(
+                'Contact & Location',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xFFC8B6FF),
+                ),
+              ),
               const SizedBox(height: 12),
-              TextField(controller: _emailController, readOnly: true, decoration: const InputDecoration(labelText: 'Email Address (Read-Only)', border: OutlineInputBorder(), filled: true, fillColor: Color(0xFFF1F5F9))),
+              TextField(
+                controller: _emailController,
+                readOnly: true,
+                decoration: const InputDecoration(
+                  labelText: 'Email Address (Read-Only)',
+                  border: OutlineInputBorder(),
+                  filled: true,
+                  fillColor: Color(0xFF171923),
+                ),
+              ),
               const SizedBox(height: 16),
-              TextField(controller: _phoneController, decoration: const InputDecoration(labelText: 'Phone Number', border: OutlineInputBorder())),
+              TextField(
+                controller: _phoneController,
+                decoration: const InputDecoration(
+                  labelText: 'Phone Number',
+                  border: OutlineInputBorder(),
+                ),
+              ),
               const SizedBox(height: 16),
-              TextField(controller: _addressController, decoration: const InputDecoration(labelText: 'Street Address', border: OutlineInputBorder())),
+              TextField(
+                controller: _addressController,
+                decoration: const InputDecoration(
+                  labelText: 'Street Address',
+                  border: OutlineInputBorder(),
+                ),
+              ),
               const SizedBox(height: 16),
               Row(
                 children: [
-                  Expanded(child: TextField(controller: _cityController, decoration: const InputDecoration(labelText: 'City', border: OutlineInputBorder()))),
+                  Expanded(
+                    child: TextField(
+                      controller: _cityController,
+                      decoration: const InputDecoration(
+                        labelText: 'City',
+                        border: OutlineInputBorder(),
+                      ),
+                    ),
+                  ),
                   const SizedBox(width: 12),
-                  Expanded(child: TextField(controller: _countryController, decoration: const InputDecoration(labelText: 'Country', border: OutlineInputBorder()))),
+                  Expanded(
+                    child: TextField(
+                      controller: _countryController,
+                      decoration: const InputDecoration(
+                        labelText: 'Country',
+                        border: OutlineInputBorder(),
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ],
@@ -520,9 +678,19 @@ class _UserEditDialogState extends State<_UserEditDialog> {
         ),
         FilledButton(
           onPressed: _isLoading ? null : _save,
-          style: FilledButton.styleFrom(backgroundColor: const Color(0xFF0F766E)),
-          child: _isLoading 
-              ? const SizedBox(width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white))
+          style: FilledButton.styleFrom(
+            backgroundColor: const Color(0xFFC8B6FF),
+            foregroundColor: const Color(0xFF171022),
+          ),
+          child: _isLoading
+              ? const SizedBox(
+                  width: 16,
+                  height: 16,
+                  child: CircularProgressIndicator(
+                    strokeWidth: 2,
+                    color: Colors.white,
+                  ),
+                )
               : const Text('Save Changes'),
         ),
       ],

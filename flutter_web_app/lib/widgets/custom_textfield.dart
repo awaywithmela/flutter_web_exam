@@ -25,6 +25,11 @@ class CustomTextField extends StatelessWidget {
       keyboardType: keyboardType,
       obscureText: obscureText,
       validator: validator,
+      cursorColor: const Color(0xFFC8B6FF),
+      style: const TextStyle(
+        color: Color(0xFFF7F2EA),
+        fontWeight: FontWeight.w700,
+      ),
       decoration: InputDecoration(
         labelText: label,
         prefixIcon: icon == null ? null : Icon(icon),
